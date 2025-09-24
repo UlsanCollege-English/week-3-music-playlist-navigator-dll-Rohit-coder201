@@ -1,14 +1,16 @@
-# src/playlist.py
+# /src/playlist.py
 
 class _DNode:
-    _slots_ = ("title", "prev", "next")
-    def _init_(self, title):
+    __slots__ = ("title", "prev", "next")
+
+    def __init__(self, title):
         self.title = title
         self.prev = None
         self.next = None
 
+
 class Playlist:
-    def _init_(self):
+    def __init__(self):
         self.head = None
         self.tail = None
         self.current = None
@@ -47,16 +49,15 @@ class Playlist:
         if nxt:
             nxt.prev = node
         else:
-            # Inserted at tail
-            self.tail = node
+            self.tail = node  # Inserted at tail
 
     def remove_current(self):
         if not self.current:
             return False
+
         prev_node = self.current.prev
         next_node = self.current.next
 
-        # Update links
         if prev_node:
             prev_node.next = next_node
         else:
@@ -67,7 +68,7 @@ class Playlist:
         else:
             self.tail = prev_node
 
-        # Move current
+        # Move current to next if exists, else prev
         self.current = next_node if next_node else prev_node
         return True
 
